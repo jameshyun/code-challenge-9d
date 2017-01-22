@@ -4,21 +4,23 @@ A small JSON-based web service
 # Description
 The application was built on top of NodeJS(ExpressJS)
 
-##Prerequisites
+## Prerequisites
 NodeJS@6.9.4
 npm@3.10.10
 
-##Installing
+## Installing
 1. Get the project files from GitHub(https://github.com/sydjung/code-challenge-9d)
 2. Create a project folder with any name.
 3. Place project files into the project foldedr
-4. Install packages - All necessaray packages can be installed with **"npm install".
+4. Install packages - All necessaray packages can be installed with **"npm install"**.
 
-2. How to run the application - The application can be run with **"npm start".
-3. Send a request with JSON data at a root **path(POST /).
+# Running the tests
+###### There is only one route(root) with POST method available for this project.
+The automated test for POST / route can be run with **"npm test-watch"**.
 
-ROUTES
-POST / - There is only 1 route(root) with POST method available for the test.
+# Deployment
+###### You can only send a POST request at a root path through our service(https://code-challenge-9d.herokuapp.com/)
 
-TEST
-The automated test for POST / route can be run with "npm test-watch".
+
+
+
