@@ -10,4 +10,4 @@ INSTRUCTION
 3. Send a request with JSON data at a root path(POST /).
 
 TEST
-The automated test for POST / route can be run with "npm test-watch" at 
+The automated test for POST / route can be run with "npm test-watch".
