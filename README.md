@@ -9,5 +9,8 @@ INSTRUCTION
 2. How to run the application - The application can be run with "npm start".
 3. Send a request with JSON data at a root path(POST /).
 
+ROUTES
+POST / - There is only 1 route(root) with POST method available for the test.
+
 TEST
 The automated test for POST / route can be run with "npm test-watch".
