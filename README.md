@@ -10,13 +10,21 @@ npm@3.10.10
 
 For protect Environment variables,
 you need to create a file called "config.json" under ./server/config/ with JSON data below:
+
 {
+
 	"test": {
-		"PORT": 3000		
+	
+		"PORT": 3000
+		
 	},
+	
 	"development": {
+	
 		"PORT": 3000		
+		
 	}
+	
 }
 
 ## Installing
