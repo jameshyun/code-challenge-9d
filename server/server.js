@@ -26,8 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // =======================
 // root path for deployment
 app.post('/', (req, res) => {   
-    res.set('Content-Type', 'application/json');
+    
     if (!req.is('application/json') || !req.body.hasOwnProperty('payload')) {
+        res.set('Content-Type', 'application/json');
         return res.status(400).json({ error: "Could not decode request" });
     }
     // if (req.body.hasOwnProperty('payload')) {
