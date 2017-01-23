@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/', (req, res) => {   
     
     if (!req.is('application/json') || !req.body.hasOwnProperty('payload')) {
-        res.set('Content-Type', 'application/json');
+        // res.set('Content-Type', 'application/json');
         return res.status(400).json({ error: "Could not decode request" });
     }
     // if (req.body.hasOwnProperty('payload')) {
@@ -49,7 +49,7 @@ app.post('/', (req, res) => {
         // if (!result) {            
         //     return res.status(404).send({ response: "Not found" });
         // }
-        res.send(result);
+        res.json(result);
     // } else {
         
     //     res.status(400).send(JSON.stringify({ error: "Could not decode request" }));
