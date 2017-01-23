@@ -41,20 +41,21 @@ app.post('/', (req, res) => {
             }
         }
 
-        if (!result) {
-            return res.status(404).json({ "error": "Could not decode request: JSON parsing failed" });
-            // return res.status(404).json({ "response": "Not found" });
+        if (!result) {            
+            return res.status(404).send({ "response": "Not found" });
         }
-
-        res.json(result);
+        res.send(result);
     } else {
-        res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+        res.set('Content-Type', 'application/json');
+        res.status(400).send({ "error": "Could not decode request: JSON parsing failed" });
     }
 });
 
 // Send response 400 status for the rest routes
-app.use('/*', function(req, res) { res.status(400).json({ "error": "Could not decode request: JSON parsing failed" }); });
-// app.use('/*', function(req, res) { res.status(400).json({ "error": "Unable to handle request" }); });
+app.use('/*', (req, res) => {
+    res.set('Content-Type', 'application/json');
+    res.status(400).send({ "error": "Could not decode request: JSON parsing failed" }); 
+});
 
 // =======================
 // start the server ======
