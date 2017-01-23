@@ -19,19 +19,14 @@ const port = process.env.PORT;
 // Middlewares
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // =======================
 // Routes ================
 // =======================
 // root path for deployment
-app.post('/', (req, res) => {   
-    
-    if (!req.is('application/json') || !req.body.hasOwnProperty('payload')) {
-        // res.set('Content-Type', 'application/json');
-        return res.status(400).json({ error: "Could not decode request" });
-    }
-    // if (req.body.hasOwnProperty('payload')) {
+app.post('/', (req, res) => {    
+    if (req.is('application/json') && (req.body.hasOwnProperty('payload'))) {
         const payload = req.body.payload;
         const result = { response: [] };
 
@@ -46,21 +41,18 @@ app.post('/', (req, res) => {
             }
         }
 
-        // if (!result) {            
-        //     return res.status(404).send({ response: "Not found" });
-        // }
-        res.json(result);
-    // } else {
-        
-    //     res.status(400).send(JSON.stringify({ error: "Could not decode request" }));
-    // }
+        if (!result) {
+            return res.status(404).send({ "response": "Not found" });
+        }
+
+        res.send(result);
+    } else {
+        res.status(400).send({ "error": "Could not decode request: JSON parsing failed" });
+    }
 });
 
 // Send response 400 status for the rest routes
-// app.use('/*', (req, res) => {
-//     res.setHeader('Content-Type', 'application/json');
-//     res.status(400).send({ error: "Could not decode request: JSON parsing failed" }); 
-// });
+app.use('/*', function(req, res) { res.status(400).send({ "error": "Unable to handle request" }); });
 
 // =======================
 // start the server ======
