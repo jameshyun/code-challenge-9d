@@ -44,9 +44,9 @@ app.post('/', (req, res) => {
         }
 
         if (!result) {            
-            return res.status(404).send({ response: "Not found" });
+            return res.status(404).send(JSON.stringify({ response: "Not found" }));
         }
-        res.send(result);
+        res.send(JSON.stringify(result));
     } else {
         res.status(400).send(JSON.stringify({ error: "Could not decode request" }));
     }
@@ -55,7 +55,7 @@ app.post('/', (req, res) => {
 // Send response 400 status for the rest routes
 app.use('/*', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.status(400).send({ error: "Could not decode request: JSON parsing failed" }); 
+    res.status(400).send(JSON.stringify({ error: "Could not decode request: JSON parsing failed" })); 
 });
 
 // =======================
