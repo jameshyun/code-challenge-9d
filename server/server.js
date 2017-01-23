@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // =======================
 // root path for deployment
 app.post('/', (req, res) => {   
-    res.setHeader('Content-Type', 'application/json');
+    res.set('Content-Type', 'application/json');
 
     if (req.is('application/json') && (req.body.hasOwnProperty('payload'))) {
         const payload = req.body.payload;
@@ -44,18 +44,18 @@ app.post('/', (req, res) => {
         }
 
         if (!result) {            
-            return res.status(404).json({ response: "Not found" });
+            return res.status(404).send({ response: "Not found" });
         }
-        res.json(result);
+        res.send(result);
     } else {
-        res.status(400).json({ error: "Could not decode request: JSON parsing failed" });
+        res.status(400).send(JSON.stringify({ error: "Could not decode request" }));
     }
 });
 
 // Send response 400 status for the rest routes
 app.use('/*', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.status(400).json({ error: "Could not decode request: JSON parsing failed" }); 
+    res.status(400).send({ error: "Could not decode request: JSON parsing failed" }); 
 });
 
 // =======================
