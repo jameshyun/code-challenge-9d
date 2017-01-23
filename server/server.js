@@ -19,13 +19,15 @@ const port = process.env.PORT;
 // Middlewares
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // =======================
 // Routes ================
 // =======================
 // root path for deployment
-app.post('/', (req, res) => {    
+app.post('/', (req, res) => {   
+    res.setHeader('Content-Type', 'application/json');
+
     if (req.is('application/json') && (req.body.hasOwnProperty('payload'))) {
         const payload = req.body.payload;
         const result = { response: [] };
@@ -46,14 +48,13 @@ app.post('/', (req, res) => {
         }
         res.json(result);
     } else {
-        res.set('Content-Type', 'application/json');
         res.status(400).json({ error: "Could not decode request: JSON parsing failed" });
     }
 });
 
 // Send response 400 status for the rest routes
 app.use('/*', (req, res) => {
-    res.set('Content-Type', 'application/json');
+    res.setHeader('Content-Type', 'application/json');
     res.status(400).json({ error: "Could not decode request: JSON parsing failed" }); 
 });
 
