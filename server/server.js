@@ -27,8 +27,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // root path for deployment
 app.post('/', (req, res) => {   
     res.set('Content-Type', 'application/json');
-
-    if (req.is('application/json') && (req.body.hasOwnProperty('payload'))) {
+    if (!req.is('application/json') || !req.body.hasOwnProperty('payload')) {
+        return res.status(400).json({ error: "Could not decode request" });
+    }
+    // if (req.body.hasOwnProperty('payload')) {
         const payload = req.body.payload;
         const result = { response: [] };
 
@@ -47,9 +49,10 @@ app.post('/', (req, res) => {
         //     return res.status(404).send({ response: "Not found" });
         // }
         res.send(result);
-    } else {
-        res.status(400).send(JSON.stringify({ error: "Could not decode request" }));
-    }
+    // } else {
+        
+    //     res.status(400).send(JSON.stringify({ error: "Could not decode request" }));
+    // }
 });
 
 // Send response 400 status for the rest routes
