@@ -8,6 +8,25 @@ The application was built on top of NodeJS(ExpressJS)
 NodeJS@6.9.4
 npm@3.10.10
 
+For protect Environment variables,
+you need to create a file called "config.json" under ./server/config/ with JSON data below:
+
+{
+
+	"test": {
+	
+		"PORT": 3000
+		
+	},
+	
+	"development": {
+	
+		"PORT": 3000		
+		
+	}
+	
+}
+
 ## Installing
 1. Get the project files from GitHub(https://github.com/sydjung/code-challenge-9d)
 2. Create a project folder with any name.
