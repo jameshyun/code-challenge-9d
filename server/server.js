@@ -21,12 +21,25 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+function validateRequest(req, res, next) {
+    if (req.headers["content-type"] === 'application/json') {
+        next();
+    } else {
+        return res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+    }
+}
+
 // =======================
 // Routes ================
 // =======================
 // root path for deployment
-app.post('/', (req, res) => {    
-    if (req.is('application/json') && (req.body.hasOwnProperty('payload'))) {
+app.post('/', validateRequest, (req, res) => { 
+    
+    try {
+        if (!req.body.hasOwnProperty('payload')) {
+            return res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+        }
+
         const payload = req.body.payload;
         const result = { response: [] };
 
@@ -41,14 +54,82 @@ app.post('/', (req, res) => {
             }
         }
 
-        if (!result) {
-            return res.status(404).send({ "response": "Not found" });
-        }
-
-        res.send(result);
-    } else {
-        res.status(400).send({ "error": "Could not decode request: JSON parsing failed" });
+        res.json(result);
+    } catch (e) {
+        res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
     }
+
+
+
+
+
+
+
+
+    // console.log(req.body)
+    // var jsonStr = req.body;
+    // try {
+    //     jsonObj = JSON.parse(jsonStr)
+    //     res.send('success')
+    // } catch(e) {
+    //     res.status(400).send('Invald')
+    // }
+
+
+
+
+
+    // try {
+    //     if (!req.body.hasOwnProperty('payload')) {
+    //         return res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+    //     }
+
+    //     const payload = req.body.payload;
+    //     const result = { response: [] };
+
+    //     // filter data with drm: true and episodeCount > 0
+    //     for (let i = 0; i < payload.length; i++) {
+    //         if (payload[i].drm === true && payload[i].episodeCount > 0) {
+    //             result.response.push({
+    //                 image: payload[i].image.showImage,
+    //                 slug: payload[i].slug,
+    //                 title: payload[i].title
+    //             });
+    //         }
+    //     }
+
+    //     res.json(result);
+    // } catch (e) {
+    //     res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+    // }
+
+
+
+
+    // if (req.is('application/json') && (req.body.hasOwnProperty('payload'))) {
+    //     console.log('Content/type: ' , res.header)
+    //     const payload = req.body.payload;
+    //     const result = { response: [] };
+
+    //     // filter data with drm: true and episodeCount > 0
+    //     for (let i = 0; i < payload.length; i++) {
+    //         if (payload[i].drm === true && payload[i].episodeCount > 0) {
+    //             result.response.push({
+    //                 image: payload[i].image.showImage,
+    //                 slug: payload[i].slug,
+    //                 title: payload[i].title
+    //             });
+    //         }
+    //     }
+
+    //     if (!result) {
+    //         return res.status(404).send({ "response": "Not found" });
+    //     }
+
+    //     res.send(result);
+    // } else {
+    //     res.status(400).send({ "error": "Could not decode request: JSON parsing failed" });
+    // }
 });
 
 // Send response 400 status for the rest routes
