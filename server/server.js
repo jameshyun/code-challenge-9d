@@ -24,6 +24,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 function validateRequest(req, res, next) {
     res.set('content-type', 'application/json');
     if (req.headers["content-type"] === 'application/json') {
+        // try {
+        //     // if (!req.body.hasOwnProperty('payload')) {
+        //     //     return res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+        //     // }
+
+        //     const payload = JSON.parse(req.body.payload);            
+
+            
+        // } catch (e) {
+        //     res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
+        // }
         next();
     } else {
         return res.status(400).json({ "error": "Could not decode request: JSON parsing failed" });
