@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function validateRequest(req, res, next) {
+    res.set('content-type', 'application/json');
     if (req.headers["content-type"] === 'application/json') {
         next();
     } else {
